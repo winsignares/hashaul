@@ -1,0 +1,256 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #0f1a2e;
+    min-height: 100vh;
+    color: white;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+.sidebar {
+    width: 250px;
+    background-color: #0f1a2e;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+    border-right: 1px solid #1a2942;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 10px;
+}
+
+.logo img {
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+.logo-text {
+    text-align: center;
+}
+
+.logo-text h1 {
+    font-size: 22px;
+    letter-spacing: 2px;
+}
+
+.logo-text span {
+    color: #30b4e4;
+}
+
+.logo-text p {
+    font-size: 8px;
+    letter-spacing: 0.5px;
+    color: #ccc;
+    margin-top: 5px;
+}
+
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.menu-item {
+    padding: 15px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.menu-item:hover {
+    background-color: #1a2942;
+}
+
+.menu-item.active {
+    background-color: #1a2942;
+}
+
+.logout-container {
+    margin-top: auto;
+    padding: 20px 10px;
+}
+
+.logout-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.logout-btn i {
+    margin-right: 10px;
+}
+
+.logout-btn:hover {
+    background-color: #444;
+}
+
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.map-container {
+    flex-grow: 1;
+    min-height: 60vh;
+    background-color: #f0f0f0;
+}
+
+
+.route-info {
+    display: flex;
+    min-height: 200px;
+    background-color: #0f1a2e;
+}
+
+
+.checkpoints-section {
+    flex: 1;
+    margin: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.section-header {
+    background-color: #b30000;
+    padding: 10px 15px;
+}
+
+.section-header h2 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.checkpoints-list {
+    padding: 10px;
+}
+
+.checkpoint-item {
+    background-color: #222;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.checkpoint-item p {
+    font-size: 14px;
+}
+
+
+.status-section {
+    flex: 1;
+    margin: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.status-list {
+    padding: 10px;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    background-color: #222;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.status-indicator {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.status-indicator.completed {
+    background-color: #00ff00; 
+}
+
+.status-indicator.pending {
+    background-color: #ffcc00; 
+}
+
+.status-indicator.failed {
+    background-color: #ff0000; 
+}
+
+.status-text {
+    font-size: 14px;
+}
+
+
+@media (max-width: 1024px) {
+    .route-info {
+        flex-direction: column;
+    }
+    
+    .checkpoints-section, .status-section {
+        margin: 5px 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #1a2942;
+    }
+    
+    .menu {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .menu-item {
+        margin-right: 10px;
+        margin-bottom: 0;
+    }
+    
+    .logout-container {
+        margin-top: 20px;
+    }
+    
+    .map-container {
+        min-height: 40vh;
+    }
+}
