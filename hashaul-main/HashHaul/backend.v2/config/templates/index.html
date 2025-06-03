@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HASHHAUL - Login</title>
+    <link rel="stylesheet" href="../static/styles/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <div class="logo">
+                <img src="../static/img/Imagen de WhatsApp 2025-04-17 a las 11.02.52_7a1f0482.jpg" alt="HASHHAUL Logo">
+                <div class="logo-text">
+                    <h1>HASHH<span>AUL</span></h1>
+                    <p>HASHING EVERY ROUTE, HAULING EVERY ASSET</p>
+                </div>
+            </div>
+            
+            <!-- Mensaje de error/éxito -->
+            <div id="message" class="message hidden"></div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <input 
+                        type="email" 
+                        id="correo"
+                        name="correo"
+                        placeholder="CORREO ELECTRÓNICO" 
+                        required
+                        autocomplete="email">
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <input 
+                        type="password" 
+                        id="contraseña"
+                        name="contraseña"
+                        placeholder="CONTRASEÑA" 
+                        required
+                        autocomplete="current-password">
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-text">LOGIN</span>
+                    <div class="spinner hidden"></div>
+                </button>
+                
+                <!-- Enlace para registro (opcional) -->
+                <div class="register-link">
+                    <p>¿No tienes cuenta? <a href="#" id="registerLink">Regístrate aquí</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="shape top-right"></div>
+    <div class="shape bottom-left"></div>
+
+    <!-- Modal de Registro (opcional) -->
+    <div id="registerModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Registro de Usuario</h2>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <form id="registerForm">
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="nombre"
+                        name="nombre"
+                        placeholder="NOMBRE COMPLETO" 
+                        required>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <input 
+                        type="email" 
+                        id="correoRegistro"
+                        name="correo"
+                        placeholder="CORREO ELECTRÓNICO" 
+                        required>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <input 
+                        type="tel" 
+                        id="telefono"
+                        name="telefono"
+                        placeholder="TELÉFONO (OPCIONAL)">
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <input 
+                        type="password" 
+                        id="contraseñaRegistro"
+                        name="contraseña"
+                        placeholder="CONTRASEÑA" 
+                        required
+                        minlength="6">
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <input 
+                        type="password" 
+                        id="confirmarContraseña"
+                        name="confirmarContraseña"
+                        placeholder="CONFIRMAR CONTRASEÑA" 
+                        required
+                        minlength="6">
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <span class="btn-text">REGISTRARSE</span>
+                    <div class="spinner hidden"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+<script>
+    
+    const API_BASE_URL = window.location.origin + '/api';
+    
+
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const registerModal = document.getElementById('registerModal');
+    const registerLink = document.getElementById('registerLink');
+    const closeModal = document.getElementById('closeModal');
+    const messageDiv = document.getElementById('message');
+
+   
+    function showMessage(message, type = 'error') {
+        messageDiv.textContent = message;
+        messageDiv.className = `message ${type}`;
+        messageDiv.classList.remove('hidden');
+        
+        
+        setTimeout(() => {
+            messageDiv.classList.add('hidden');
+        }, 5000);
+    }
+
+    function showLoading(button, show = true) {
+        const btnText = button.querySelector('.btn-text');
+        const spinner = button.querySelector('.spinner');
+        
+        if (show) {
+            btnText.style.display = 'none';
+            spinner.classList.remove('hidden');
+            button.disabled = true;
+        } else {
+            btnText.style.display = 'inline';
+            spinner.classList.add('hidden');
+            button.disabled = false;
+        }
+    }
+
+    function saveToken(token) {
+        localStorage.setItem('hashhaul_token', token);
+    }
+
+    function redirectToDashboard() {
+       
+        window.location.href = '/dashboard';
+    }
+
+    
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const loginBtn = document.getElementById('loginBtn');
+        const correo = document.getElementById('correo').value.trim();
+        const contraseña = document.getElementById('contraseña').value;
+
+       
+        if (!correo || !contraseña) {
+            showMessage('Por favor, completa todos los campos', 'error');
+            return;
+        }
+
+        showLoading(loginBtn, true);
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    correo: correo,
+                    contraseña: contraseña
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+               
+                saveToken(data.token);
+                showMessage('¡Login exitoso! Redirigiendo...', 'success');
+                
+                setTimeout(() => {
+                    redirectToDashboard();
+                }, 1500);
+            } else {
+               
+                showMessage(data.error || 'Error en el login', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showMessage('Error de conexión. Verifica tu red.', 'error');
+        } finally {
+            showLoading(loginBtn, false);
+        }
+    });
+
+   
+    registerLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerModal.classList.remove('hidden');
+    });
+
+    closeModal.addEventListener('click', () => {
+        registerModal.classList.add('hidden');
+    });
+
+   
+    registerModal.addEventListener('click', (e) => {
+        if (e.target === registerModal) {
+            registerModal.classList.add('hidden');
+        }
+    });
+
+   
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = registerForm.querySelector('.login-btn');
+        const nombre = document.getElementById('nombre').value.trim();
+        const correo = document.getElementById('correoRegistro').value.trim();
+        const telefono = document.getElementById('telefono').value.trim();
+        const contraseña = document.getElementById('contraseñaRegistro').value;
+        const confirmarContraseña = document.getElementById('confirmarContraseña').value;
+
+        
+        if (!nombre || !correo || !contraseña) {
+            showMessage('Por favor, completa todos los campos obligatorios', 'error');
+            return;
+        }
+
+        if (contraseña !== confirmarContraseña) {
+            showMessage('Las contraseñas no coinciden', 'error');
+            return;
+        }
+
+        if (contraseña.length < 6) {
+            showMessage('La contraseña debe tener al menos 6 caracteres', 'error');
+            return;
+        }
+
+        showLoading(submitBtn, true);
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    nombre: nombre,
+                    correo: correo,
+                    telefono: telefono || null,
+                    contraseña: contraseña,
+                    rol: 'conductor' 
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                
+                showMessage('¡Registro exitoso! Ya puedes iniciar sesión.', 'success');
+                registerModal.classList.add('hidden');
+                registerForm.reset();
+            } else {
+                
+                showMessage(data.error || 'Error en el registro', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showMessage('Error de conexión. Verifica tu red.', 'error');
+        } finally {
+            showLoading(submitBtn, false);
+        }
+    });
+
+   
+</script>
+</body>
+</html>

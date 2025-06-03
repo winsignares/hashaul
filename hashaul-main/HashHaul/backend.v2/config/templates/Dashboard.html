@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HASHHAUL - Dashboard</title>
+    <link rel="stylesheet" href="../static/styles/Daashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="../static/img/Imagen de WhatsApp 2025-04-17 a las 11.02.52_7a1f0482.jpg" alt="HASHHAUL Logo">
+                <div class="logo-text">
+                    <h1>HASHH<span>AUL</span></h1>
+                    <p>HASHING EVERY ROUTE, HAULING EVERY ASSET</p>
+                </div>
+            </div>
+            
+            <nav class="menu">
+                <a href="/dashboard" class="menu-item active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    DASHBOARD
+                </a>
+                <a href="/map" class="menu-item" id="mapLink">
+                    <i class="fas fa-map"></i>
+                    MAPA
+                </a>
+                <a href="/admin" class="menu-item" id="adminLink">
+                    <i class="fas fa-cog"></i>
+                    ADMIN
+                </a>
+            </nav>
+
+            <div class="user-info" id="userInfo">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <span class="user-name" id="userName">Cargando...</span>
+                    <span class="user-role" id="userRole">Usuario</span>
+                </div>
+            </div>
+            
+            <div class="logout-container">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    CERRAR SESIÓN
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="main-header">
+                <h1>DASHBOARD</h1>
+                <div class="header-actions">
+                    <button class="refresh-btn" id="refreshBtn">
+                        <i class="fas fa-sync-alt"></i>
+                        Actualizar
+                    </button>
+                </div>
+            </header>
+
+            <!-- Loading Spinner -->
+            <div class="loading" id="loadingSpinner">
+                <div class="spinner"></div>
+                <p>Cargando información...</p>
+            </div>
+
+            <!-- Message Container -->
+            <div id="messageContainer" class="message-container hidden"></div>
+            
+            <div class="dashboard-grid" id="dashboardContent" style="display: none;">
+                <!-- Profile Card -->
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="avatar">
+                            <div class="avatar-circle">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profileName">Cargando...</h2>
+                            <span class="profile-role" id="profileRole">Usuario</span>
+                            <span class="profile-status" id="profileStatus">
+                                <i class="fas fa-circle"></i>
+                                Activo
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-details">
+                        <div class="detail-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <span class="detail-label">Correo:</span>
+                                <span class="detail-value" id="profileEmail">Cargando...</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <span class="detail-label">Teléfono:</span>
+                                <span class="detail-value" id="profilePhone">No disponible</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <div>
+                                <span class="detail-label">Miembro desde:</span>
+                                <span class="detail-value" id="profileSince">Cargando...</span>
+                            </div>
+                        </div>
+                        <div class="detail-item" id="assignedTruckContainer" style="display: none;">
+                            <i class="fas fa-truck"></i>
+                            <div>
+                                <span class="detail-label">Camión Asignado:</span>
+                                <span class="detail-value" id="profileTruck">No asignado</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" id="totalTrips">0</div>
+                            <div class="stat-label">Viajes Totales</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="completedTrips">0</div>
+                            <div class="stat-label">Completados</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="pendingTrips">0</div>
+                            <div class="stat-label">Pendientes</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Trips Card -->
+                <div class="history-card">
+                    <div class="section-header">
+                        <h2>
+                            <i class="fas fa-history"></i>
+                            HISTORIAL RECIENTE
+                        </h2>
+                        <button class="view-all-btn" id="viewAllHistoryBtn">
+                            Ver Todo
+                        </button>
+                    </div>
+                    
+                    <div class="history-content" id="historyContent">
+                        <div class="empty-state">
+                            <i class="fas fa-route"></i>
+                            <p>No hay viajes completados aún</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Upcoming Trips Card -->
+                <div class="upcoming-card">
+                    <div class="section-header">
+                        <h2>
+                            <i class="fas fa-clock"></i>
+                            PRÓXIMOS VIAJES
+                        </h2>
+                        <button class="refresh-trips-btn" id="refreshTripsBtn">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="upcoming-content" id="upcomingContent">
+                        <div class="empty-state">
+                            <i class="fas fa-calendar-plus"></i>
+                            <p>No hay viajes programados</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Card -->
+                <div class="actions-card">
+                    <div class="section-header">
+                        <h2>
+                            <i class="fas fa-bolt"></i>
+                            ACCIONES RÁPIDAS
+                        </h2>
+                    </div>
+                    
+                    <div class="actions-grid">
+                        <button class="action-btn" id="viewMapBtn">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>Ver Mapa</span>
+                        </button>
+                        <button class="action-btn" id="reportIncidentBtn">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>Reportar Incidente</span>
+                        </button>
+                        <button class="action-btn" id="viewProfileBtn">
+                            <i class="fas fa-user-edit"></i>
+                            <span>Editar Perfil</span>
+                        </button>
+                        <button class="action-btn" id="contactSupportBtn">
+                            <i class="fas fa-headset"></i>
+                            <span>Soporte</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trip Detail Modal -->
+    <div class="modal" id="tripDetailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="tripDetailTitle">Detalles del Viaje</h2>
+                <span class="close-modal" id="closeTripModal">&times;</span>
+            </div>
+            <div id="tripDetailContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="closeTripDetailBtn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incident Report Modal -->
+    <div class="modal" id="incidentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reportar Incidente</h2>
+                <span class="close-modal" id="closeIncidentModal">&times;</span>
+            </div>
+            <form id="incidentForm">
+                <div class="form-group">
+                    <label for="incidentType">Tipo de Incidente:</label>
+                    <select id="incidentType" name="tipo" required>
+                        <option value="">Seleccionar tipo</option>
+                        <option value="accidente">Accidente</option>
+                        <option value="desvio">Desvio</option>
+                        <option value="retraso">Retraso</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="incidentGravity">Gravedad:</label>
+                    <select id="incidentGravity" name="gravedad" required>
+                        <option value="baja">Baja</option>
+                        <option value="media">Media</option>
+                        <option value="alta">Alta</option>
+                        <option value="critica">Crítica</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="incidentDescription">Descripción:</label>
+                    <textarea id="incidentDescription" name="descripcion" required rows="4" placeholder="Describe detalladamente el incidente..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="checkpointId">Checkpoint ID:</label>
+                    <input type="number" id="checkpointId" name="checkpoint_id" placeholder="ID del checkpoint más cercano">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelIncidentBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Reportar</span>
+                        <div class="spinner hidden"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../static/js/Dashboard.js"></script>
+</body>
+</html>

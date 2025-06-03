@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HASHHAUL - Panel de Administración</title>
+    <link rel="stylesheet" href="../static/styles/Admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+     <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="../static/img/Imagen de WhatsApp 2025-04-17 a las 11.02.52_7a1f0482.jpg" alt="HASHHAUL Logo">
+                <div class="logo-text">
+                    <h1>HASHH<span>AUL</span></h1>
+                    <p>HASHING EVERY ROUTE, HAULING EVERY ASSET</p>
+                </div>
+            </div>
+
+            <nav class="menu">
+    <a href="/dashboard" class="menu-item">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>DASHBOARD</span>
+    </a>
+    <a href="/admin" class="menu-item active">
+        <i class="fas fa-cog"></i>
+        <span>ADMIN</span>
+    </a>
+    <!-- CORREGIR ESTA LÍNEA: -->
+    <a href="/map" class="menu-item" id="mapLink">
+        <i class="fas fa-map"></i>
+        <span>MAPA</span>
+    </a>
+</nav>
+
+            <div class="user-info" id="userInfo">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <span class="user-name" id="userName">Cargando...</span>
+                    <span class="user-role" id="userRole">Cargando...</span>
+                </div>
+            </div>
+
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>CERRAR SESIÓN</span>
+            </button>
+        </div>
+
+        <div class="main-content">
+            <header class="header">
+                <h1 class="page-title">PANEL DE ADMINISTRACIÓN</h1>
+                <div class="header-actions">
+                    <button class="refresh-btn" id="refreshBtn">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Actualizar</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="loading hidden" id="loadingSpinner">
+                <div class="spinner"></div>
+                <p>Cargando datos...</p>
+            </div>
+
+            <div id="messageContainer" class="message-container hidden"></div>
+
+            <div class="view" id="admin-view">
+                <div class="admin-tabs">
+                    <button class="tab-btn active" data-tab="usuarios">
+                        <i class="fas fa-users"></i>
+                        <span>Usuarios</span>
+                    </button>
+                    <button class="tab-btn" data-tab="camiones">
+                        <i class="fas fa-truck"></i>
+                        <span>Camiones</span>
+                    </button>
+                    <button class="tab-btn" data-tab="viajes">
+                        <i class="fas fa-route"></i>
+                        <span>Viajes</span>
+                    </button>
+                    <button class="tab-btn" data-tab="rutas">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Rutas</span>
+                    </button>
+                    <button class="tab-btn" data-tab="checkpoints">
+                        <i class="fas fa-map-pin"></i>
+                        <span>Checkpoints</span>
+                    </button>
+                    <button class="tab-btn" data-tab="incidentes">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Incidentes</span>
+                    </button>
+                </div>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="usuarios-tab">
+                        <div class="admin-header">
+                            <h2>Gestión de Usuarios</h2>
+                            <button class="add-btn" id="add-usuario-btn">
+                                <i class="fas fa-plus"></i>
+                                <span>Agregar Usuario</span>
+                            </button>
+                        </div>
+                        <div class="table-container">
+                            <div class="data-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th>Correo</th>
+                                            <th>Teléfono</th>
+                                            <th>Rol</th>
+                                            <th>Estado</th>
+                                            <th>Fecha registro</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usuarios-table-body">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="camiones-tab">
+                        <div class="admin-header">
+                            <h2>Gestión de Camiones</h2>
+                            <button class="add-btn" id="add-camion-btn">
+                                <i class="fas fa-plus"></i>
+                                <span>Agregar Camión</span>
+                            </button>
+                        </div>
+                        <div class="table-container">
+                            <div class="data-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Placa</th>
+                                            <th>Modelo</th>
+                                            <th>Capacidad</th>
+                                            <th>Año</th>
+                                            <th>Estado</th> <th>Fecha registro</th> <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="camiones-table-body">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="viajes-tab">
+                        <div class="admin-header">
+                            <h2>Gestión de Viajes</h2>
+                            <button class="add-btn" id="add-viaje-btn">
+                                <i class="fas fa-plus"></i>
+                                <span>Agregar Viaje</span>
+                            </button>
+                        </div>
+                        <div class="table-container">
+                            <div class="data-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Usuario ID</th>
+                                            <th>Camión ID</th>
+                                            <th>Estado</th>
+                                            <th>Fecha Inicio</th>
+                                            <th>Fecha Fin</th>
+                                            <th>Código</th>
+                                            <th>Observaciones</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="viajes-table-body">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="rutas-tab">
+                        <div class="admin-header">
+                            <h2>Gestión de Rutas</h2>
+                            <button class="add-btn" id="add-ruta-btn">
+                                <i class="fas fa-plus"></i>
+                                <span>Agregar Ruta</span>
+                            </button>
+                        </div>
+                        <div class="table-container">
+                            <div class="data-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Viaje ID</th>
+                                            <th>Nombre</th>
+                                            <th>Distancia (km)</th>
+                                            <th>Tiempo Est. (hrs)</th>
+                                            <th>Estado</th> <th>Fecha Creación</th> <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rutas-table-body">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="checkpoints-tab">
+                        <div class="admin-header">
+                            <h2>Gestión de Checkpoints</h2>
+                            <button class="add-btn" id="add-checkpoint-btn">
+                                <i class="fas fa-plus"></i>
+                                <span>Agregar Checkpoint</span>
+                            </button>
+                        </div>
+                        <div class="table-container">
+                            <div class="data-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Ruta ID</th>
+                                            <th>Dirección</th>
+                                            <th>Coordenadas</th>
+                                            <th>Orden</th>
+                                            <th>Estado</th>
+                                            <th>Hash</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="checkpoints-table-body">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="incidentes-tab">
+                        <div class="admin-header">
+                            <h2>Gestión de Incidentes</h2>
+                        </div>
+                        <div class="table-container">
+                            <div class="data-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Checkpoint ID</th>
+                                            <th>Tipo</th>
+                                            <th>Descripción</th>
+                                            <th>Gravedad</th>
+                                            <th>Estado</th>
+                                            <th>Fecha</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="incidentes-table-body">
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="form-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Agregar Nuevo</h2>
+                <button class="close-modal" id="closeFormModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="data-form">
+                <div id="form-fields">
+                    </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn">Cancelar</button>
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">Guardar</span>
+                        <div class="spinner hidden"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="view-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="view-modal-title">Detalles</h2> <button class="close-modal" id="closeViewModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="view-content">
+                </div>
+            <div class="form-actions">
+                <button type="button" class="close-btn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/js/Admin.js"></script>
+</body>
+</html>

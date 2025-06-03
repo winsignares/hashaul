@@ -1,0 +1,1170 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0f172a;
+    min-height: 100vh;
+    color: white;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar {
+    width: 280px;
+    background-color: #0c1526;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    border-radius: 0 15px 15px 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 0 20px;
+}
+
+.logo img {
+    width: 60px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+}
+
+.logo-text {
+    text-align: center;
+}
+
+.logo-text h1 {
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.logo-text span {
+    color: #38bdf8;
+}
+
+.logo-text p {
+    font-size: 8px;
+    letter-spacing: 0.5px;
+    color: #94a3b8;
+    margin-top: 5px;
+}
+
+/* ========== MENU ========== */
+.menu {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 6px;
+    text-decoration: none;
+    color: #94a3b8;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 13px;
+}
+
+.menu-item:hover {
+    background-color: #1e293b;
+    color: white;
+    transform: translateX(5px);
+}
+
+.menu-item.active {
+    background-color: #38bdf8;
+    color: white;
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+}
+
+.menu-item i {
+    font-size: 14px;
+    width: 16px;
+}
+
+/* ========== USER INFO ========== */
+.user-info {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    margin: 0 20px 15px;
+    background-color: #1e293b;
+    border-radius: 10px;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 600;
+    color: white;
+    font-size: 12px;
+}
+
+.user-role {
+    font-size: 10px;
+    color: #94a3b8;
+    text-transform: capitalize;
+}
+
+/* ========== LOGOUT ========== */
+.logout-container {
+    margin-top: auto;
+    padding: 0 20px;
+}
+
+.logout-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* ========== MAIN CONTENT ========== */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    background-color: #1e293b;
+    border-bottom: 1px solid #334155;
+}
+
+.main-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.route-selector {
+    padding: 8px 12px;
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+    min-width: 200px;
+}
+
+.route-selector:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+}
+
+.refresh-btn, .location-btn {
+    padding: 8px 12px;
+    background-color: #334155;
+    color: white;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.refresh-btn:hover, .location-btn:hover {
+    background-color: #475569;
+    transform: translateY(-1px);
+}
+
+/* ========== LOADING ========== */
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    background-color: rgba(15, 23, 42, 0.9);
+    padding: 30px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.loading .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #1e293b;
+    border-top: 4px solid #38bdf8;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ========== MESSAGES ========== */
+.message-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    z-index: 2000;
+    max-width: 300px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.message-container.success {
+    background-color: #10b981;
+    color: white;
+}
+
+.message-container.error {
+    background-color: #ef4444;
+    color: white;
+}
+
+.message-container.warning {
+    background-color: #f59e0b;
+    color: white;
+}
+
+.message-container.info {
+    background-color: #38bdf8;
+    color: white;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ========== MAP CONTAINER ========== */
+.map-container {
+    flex: 1;
+    position: relative;
+    background-color: #1e293b;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.map-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 1000;
+}
+
+.map-control-btn {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(30, 41, 59, 0.9);
+    border: 1px solid #475569;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.map-control-btn:hover {
+    background-color: rgba(56, 189, 248, 0.9);
+    transform: scale(1.05);
+}
+
+.map-control-btn.active {
+    background-color: #38bdf8;
+    border-color: #0ea5e9;
+}
+
+/* ========== ROUTE INFO PANEL ========== */
+.route-info {
+    height: 300px;
+    background-color: #1e293b;
+    border-top: 1px solid #334155;
+    display: flex;
+    overflow: hidden;
+}
+
+.route-overview {
+    width: 300px;
+    border-right: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+}
+
+.overview-header {
+    padding: 20px;
+    border-bottom: 1px solid #334155;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: white;
+}
+
+.overview-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.route-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #6b7280;
+}
+
+.status-indicator.active {
+    background-color: #10b981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.status-indicator.pending {
+    background-color: #f59e0b;
+}
+
+.status-indicator.error {
+    background-color: #ef4444;
+}
+
+.route-details {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.route-details .detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 8px;
+    background-color: rgba(15, 23, 42, 0.5);
+    border-radius: 6px;
+}
+
+.route-details .detail-item i {
+    color: #38bdf8;
+    font-size: 14px;
+    width: 16px;
+    margin-right: 12px;
+}
+
+.route-details .detail-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-label {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-size: 13px;
+    color: white;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+/* ========== CHECKPOINTS SECTION ========== */
+.checkpoints-section {
+    flex: 1;
+    border-right: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border-bottom: 1px solid #334155;
+}
+
+.section-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.checkpoint-counter {
+    font-size: 12px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.checkpoints-list {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.checkpoint-item {
+    background-color: rgba(15, 23, 42, 0.5);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #6b7280;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.checkpoint-item:hover {
+    background-color: rgba(15, 23, 42, 0.8);
+    transform: translateX(5px);
+}
+
+.checkpoint-item.completed {
+    border-left-color: #10b981;
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.checkpoint-item.pending {
+    border-left-color: #f59e0b;
+    background-color: rgba(245, 158, 11, 0.1);
+}
+
+.checkpoint-item.current {
+    border-left-color: #38bdf8;
+    background-color: rgba(56, 189, 248, 0.1);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
+
+.checkpoint-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.checkpoint-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+}
+
+.checkpoint-status {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.checkpoint-status.completed {
+    background-color: #10b981;
+    color: white;
+}
+
+.checkpoint-status.pending {
+    background-color: #f59e0b;
+    color: white;
+}
+
+.checkpoint-status.llegada {
+    background-color: #38bdf8;
+    color: white;
+}
+
+.checkpoint-address {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-bottom: 5px;
+}
+
+.checkpoint-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.checkpoint-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.checkpoint-btn.primary {
+    background-color: #38bdf8;
+    color: white;
+}
+
+.checkpoint-btn.danger {
+    background-color: #ef4444;
+    color: white;
+}
+
+.checkpoint-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== TRACKING SECTION ========== */
+.tracking-section {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tracking-section .section-header {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.tracking-toggle {
+    padding: 6px 12px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tracking-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.tracking-toggle.active {
+    background-color: #10b981;
+}
+
+.tracking-status {
+    padding: 15px;
+    flex: 1;
+}
+
+.tracking-status .status-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 10px;
+    background-color: rgba(15, 23, 42, 0.5);
+    border-radius: 6px;
+}
+
+.tracking-status .status-item i {
+    color: #38bdf8;
+    font-size: 14px;
+    width: 16px;
+    margin-right: 10px;
+}
+
+.tracking-status .status-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+.status-label {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.status-value {
+    font-size: 12px;
+    color: white;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* ========== EMPTY STATES ========== */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    color: #94a3b8;
+    text-align: center;
+}
+
+.empty-state i {
+    font-size: 36px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+/* ========== MODAL STYLES ========== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: relative;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    margin: 5% auto;
+    padding: 0;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid #334155;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #334155;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: white;
+    border-radius: 15px 15px 0 0;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.close-modal {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.close-modal:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 20px 25px;
+    border-top: 1px solid #334155;
+}
+
+/* ========== FORM STYLES ========== */
+.form-group {
+    margin-bottom: 18px;
+    padding: 0 25px;
+}
+
+.form-group:first-child {
+    margin-top: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: #94a3b8;
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: rgba(15, 23, 42, 0.8);
+    border: 1px solid #334155;
+    border-radius: 6px;
+    color: white;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+    background-color: rgba(15, 23, 42, 1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 70px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #6b7280;
+}
+
+/* ========== BUTTON STYLES ========== */
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
+}
+
+.btn-secondary {
+    background-color: #374151;
+    color: white;
+    border: 1px solid #4b5563;
+}
+
+.btn-secondary:hover {
+    background-color: #4b5563;
+    border-color: #6b7280;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* ========== CHECKPOINT MODAL CONTENT ========== */
+.checkpoint-detail {
+    padding: 25px;
+}
+
+.checkpoint-detail-section {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #334155;
+}
+
+.checkpoint-detail-section:last-child {
+    border-bottom: none;
+}
+
+.checkpoint-detail-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #38bdf8;
+    font-size: 14px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.checkpoint-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.checkpoint-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    background-color: rgba(30, 41, 59, 0.3);
+    border-radius: 6px;
+}
+
+.checkpoint-detail-item .detail-label {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.checkpoint-detail-item .detail-value {
+    font-size: 12px;
+    color: white;
+    font-weight: 500;
+}
+
+.hash-display {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: #94a3b8;
+    word-break: break-all;
+    background-color: rgba(15, 23, 42, 0.8);
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #334155;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 1200px) {
+    .route-info {
+        height: 250px;
+    }
+    
+    .route-overview {
+        width: 250px;
+    }
+    
+    .tracking-section {
+        width: 220px;
+    }
+    
+    .sidebar {
+        width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        border-radius: 0;
+        padding: 10px 0;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        flex-direction: row;
+        margin-bottom: 0;
+        padding: 0 15px;
+    }
+    
+    .logo img {
+        width: 40px;
+        margin-right: 10px;
+        margin-bottom: 0;
+    }
+    
+    .logo-text {
+        text-align: left;
+    }
+    
+    .logo-text h1 {
+        font-size: 16px;
+    }
+    
+    .logo-text p {
+        font-size: 7px;
+    }
+    
+    .menu {
+        flex-direction: row;
+        padding: 0;
+        margin-bottom: 0;
+        gap: 5px;
+    }
+    
+    .menu-item {
+        padding: 8px 12px;
+        margin-bottom: 0;
+        font-size: 11px;
+        min-width: 80px;
+        justify-content: center;
+    }
+    
+    .user-info {
+        margin: 0 15px 0 0;
+        padding: 8px 12px;
+    }
+    
+    .user-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+    
+    .user-name, .user-role {
+        font-size: 10px;
+    }
+    
+    .logout-container {
+        padding: 0 15px;
+        margin-top: 0;
+    }
+    
+    .logout-btn {
+        padding: 8px 12px;
+        font-size: 10px;
+        min-width: 80px;
+    }
+    
+    .main-header {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .main-header h1 {
+        font-size: 20px;
+    }
+    
+    .header-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .route-selector {
+        flex: 1;
+        min-width: auto;
+        margin-right: 10px;
+    }
+    
+    .route-info {
+        flex-direction: column;
+        height: auto;
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+    
+    .route-overview {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #334155;
+    }
+    
+    .checkpoints-section {
+        border-right: none;
+        border-bottom: 1px solid #334155;
+    }
+    
+    .tracking-section {
+        width: 100%;
+    }
+    
+    .map-controls {
+        top: 10px;
+        right: 10px;
+        flex-direction: row;
+    }
+    
+    .map-control-btn {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10px auto;
+        max-height: 95vh;
+    }
+    
+    .modal-header {
+        padding: 15px 20px;
+    }
+    
+    .modal-header h2 {
+        font-size: 16px;
+    }
+    
+    .form-group {
+        padding: 0 20px;
+        margin-bottom: 15px;
+    }
+    
+    .modal-actions {
+        padding: 15px 20px;
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-text h1 {
+        font-size: 14px;
+    }
+    
+    .menu-item {
+        padding: 6px 8px;
+        font-size: 10px;
+        min-width: 60px;
+    }
+    
+    .main-header h1 {
+        font-size: 18px;
+    }
+    
+    .section-header {
+        padding: 15px;
+    }
+    
+    .section-header h2 {
+        font-size: 14px;
+    }
+    
+    .checkpoint-item {
+        padding: 12px;
+    }
+    
+    .checkpoint-title {
+        font-size: 12px;
+    }
+    
+    .checkpoint-address {
+        font-size: 11px;
+    }
+    
+    .tracking-status {
+        padding: 12px;
+    }
+    
+    .modal-header {
+        padding: 12px 15px;
+    }
+    
+    .form-group {
+        padding: 0 15px;
+    }
+    
+    .modal-actions {
+        padding: 12px 15px;
+    }
+}

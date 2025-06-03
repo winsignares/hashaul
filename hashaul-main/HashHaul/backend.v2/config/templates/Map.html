@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HASHHAUL - Mapa de Rutas</title>
+    <link rel="stylesheet" href="../static/styles/Map.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="../static/img/Imagen de WhatsApp 2025-04-17 a las 11.02.52_7a1f0482.jpg" alt="HASHHAUL Logo">
+                <div class="logo-text">
+                    <h1>HASHH<span>AUL</span></h1>
+                    <p>HASHING EVERY ROUTE, HAULING EVERY ASSET</p>
+                </div>
+            </div>
+
+            <nav class="menu">
+                <a href="/dashboard" class="menu-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    DASHBOARD
+                </a>
+                <a href="/map" class="menu-item active">
+                    <i class="fas fa-map"></i>
+                    MAPA
+                </a>
+                <a href="/admin" class="menu-item" id="adminLink">
+                    <i class="fas fa-cog"></i>
+                    ADMIN
+                </a>
+            </nav>
+
+            <div class="user-info" id="userInfo">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-details">
+                    <span class="user-name" id="userName">Cargando...</span>
+                    <span class="user-role" id="userRole">Usuario</span>
+                </div>
+            </div>
+
+            <div class="logout-container">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    CERRAR SESIÓN
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="main-header">
+                <h1>MAPA DE RUTAS</h1>
+                <div class="header-controls">
+                    <select id="routeSelector" class="route-selector">
+                        <option value="">Selecciona una ruta</option>
+                    </select>
+                    <button class="refresh-btn" id="refreshMapBtn">
+                        <i class="fas fa-sync-alt"></i>
+                        Actualizar
+                    </button>
+                    <button class="location-btn" id="centerMapBtn">
+                        <i class="fas fa-crosshairs"></i>
+                        Mi Ubicación
+                    </button>
+                </div>
+            </header>
+
+            <!-- Loading Spinner -->
+            <div class="loading" id="loadingSpinner">
+                <div class="spinner"></div>
+                <p>Cargando mapa y rutas...</p>
+            </div>
+
+            <!-- Message Container -->
+            <div id="messageContainer" class="message-container hidden"></div>
+
+            <!-- Map Container -->
+            <div id="mapContainer" class="map-container">
+                <div id="map" style="width: 100%; height: 100%;"></div>
+                
+                <!-- Map Controls -->
+                <div class="map-controls">
+                    <button class="map-control-btn" id="toggleTrafficBtn" title="Mostrar/Ocultar Tráfico">
+                        <i class="fas fa-car"></i>
+                    </button>
+                    <button class="map-control-btn" id="toggleSatelliteBtn" title="Vista Satélite">
+                        <i class="fas fa-satellite"></i>
+                    </button>
+                    <button class="map-control-btn" id="fullscreenBtn" title="Pantalla Completa">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Route Information Panel -->
+            <div class="route-info" id="routeInfoPanel">
+                <!-- Route Overview -->
+                <div class="route-overview">
+                    <div class="overview-header">
+                        <h2>
+                            <i class="fas fa-route"></i>
+                            INFORMACIÓN DE RUTA
+                        </h2>
+                        <div class="route-status" id="routeStatus">
+                            <span class="status-indicator"></span>
+                            <span class="status-text">Sin ruta seleccionada</span>
+                        </div>
+                    </div>
+                    
+                    <div class="route-details" id="routeDetails">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <span class="detail-label">Origen:</span>
+                                <span class="detail-value" id="routeOrigin">-</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-flag-checkered"></i>
+                            <div>
+                                <span class="detail-label">Destino:</span>
+                                <span class="detail-value" id="routeDestination">-</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-road"></i>
+                            <div>
+                                <span class="detail-label">Distancia:</span>
+                                <span class="detail-value" id="routeDistance">-</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <span class="detail-label">Tiempo Estimado:</span>
+                                <span class="detail-value" id="routeTime">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkpoints Section -->
+                <div class="checkpoints-section">
+                    <div class="section-header">
+                        <h2>
+                            <i class="fas fa-map-pin"></i>
+                            CHECKPOINTS
+                        </h2>
+                        <span class="checkpoint-counter" id="checkpointCounter">0/0</span>
+                    </div>
+                    <div class="checkpoints-list" id="checkpointsList">
+                        <div class="empty-state">
+                            <i class="fas fa-map-pin"></i>
+                            <p>Selecciona una ruta para ver los checkpoints</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Tracking Section -->
+                <div class="tracking-section">
+                    <div class="section-header">
+                        <h2>
+                            <i class="fas fa-satellite-dish"></i>
+                            SEGUIMIENTO EN VIVO
+                        </h2>
+                        <button class="tracking-toggle" id="trackingToggle">
+                            <i class="fas fa-play"></i>
+                            Iniciar
+                        </button>
+                    </div>
+                    <div class="tracking-status" id="trackingStatus">
+                        <div class="status-item">
+                            <i class="fas fa-truck"></i>
+                            <div>
+                                <span class="status-label">Estado del Vehículo:</span>
+                                <span class="status-value" id="vehicleStatus">Detenido</span>
+                            </div>
+                        </div>
+                        <div class="status-item">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <div>
+                                <span class="status-label">Velocidad:</span>
+                                <span class="status-value" id="vehicleSpeed">0 km/h</span>
+                            </div>
+                        </div>
+                        <div class="status-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <span class="status-label">Última Actualización:</span>
+                                <span class="status-value" id="lastUpdate">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkpoint Detail Modal -->
+    <div class="modal" id="checkpointModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="checkpointModalTitle">Detalles del Checkpoint</h2>
+                <span class="close-modal" id="closeCheckpointModal">&times;</span>
+            </div>
+            <div id="checkpointModalContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="closeCheckpointBtn">Cerrar</button>
+                <button class="btn btn-primary" id="markCheckpointBtn" style="display: none;">
+                    <i class="fas fa-check"></i>
+                    Marcar como Completado
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Incident Modal -->
+    <div class="modal" id="incidentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Reportar Incidente</h2>
+                <span class="close-modal" id="closeIncidentModal">&times;</span>
+            </div>
+            <form id="incidentForm">
+                <div class="form-group">
+                    <label for="incidentType">Tipo de Incidente:</label>
+                    <select id="incidentType" name="tipo" required>
+                        <option value="">Seleccionar tipo</option>
+                        <option value="accidente">Accidente</option>
+                        <option value="mecanico">Problema Mecánico</option>
+                        <option value="clima">Clima Adverso</option>
+                        <option value="trafico">Tráfico/Congestión</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="incidentGravity">Gravedad:</label>
+                    <select id="incidentGravity" name="gravedad" required>
+                        <option value="baja">Baja</option>
+                        <option value="media">Media</option>
+                        <option value="alta">Alta</option>
+                        <option value="critica">Crítica</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="incidentDescription">Descripción:</label>
+                    <textarea id="incidentDescription" name="descripcion" required rows="4" placeholder="Describe detalladamente el incidente..."></textarea>
+                </div>
+                <input type="hidden" id="incidentCheckpointId" name="checkpoint_id">
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelIncidentBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Reportar</span>
+                        <div class="spinner hidden"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../static/js/Map.js"></script>
+</body>
+</html>

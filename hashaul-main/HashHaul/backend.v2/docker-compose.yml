@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: hashhaul_mysql
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: "hash_haul_db"
+      MYSQL_ROOT_PASSWORD: "Julper86"  
+      MYSQL_ROOT_HOST: "%"
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  app:
+    build: .
+    container_name: hashhaul_web
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "mysql+pymysql://root:Julper86@db/hash_haul_db"
+      SECRET_KEY: "HaShHaUl_2024_$ecr3t_K3y"
+      FLASK_ENV: "production"
+    volumes:
+      - .:/app
+    command: python /app/main.py
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
